@@ -1,6 +1,17 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
+from src.stream import *
+from src.utils import *
+from src.parse import *
+from src.special import *
+# from src.read import *
+
 def test_type_fix_2():
     # this test helped fix the bug of reporting a correction when that correction was later deleted as there was a typo in the correction
-    test_typo_fix_stream = return_corrected_pairs_v2(
+    test_typo_fix_stream = return_corrected_pairs(
                             Source(
                                 ['qweryt<BckSp><BckSp>tt<BckSp>y_fill_with_ten_letters']
                             ).streamify())
@@ -15,7 +26,7 @@ def test_type_fix_2():
         print("Test Failed")
 
 def test_typo_fix_1():
-    test_typo_fix_stream_2 = return_corrected_pairs_v2(
+    test_typo_fix_stream = return_corrected_pairs(
                             Source(
                                 ['qweryt<BckSp><BckSp><BckSp>tt<BckSp>ry<BckSp><BckSp><BckSp><BckSp>eryt<BckSp><BckSp>ty_fill_with_buffer_letters']
                             ).streamify())

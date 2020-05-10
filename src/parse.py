@@ -22,7 +22,7 @@ def process_raw_line(raw_line):
 
 
 def parse(file_name, offset=70):
-    _file = open(file,"r") 
+    _file = open(file_name,"r") 
     raw_string = _file.read()
     raw_lines = raw_string.split('\n')
     clean_lines = []

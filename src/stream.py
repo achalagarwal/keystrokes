@@ -1,3 +1,4 @@
+from src.special import enumize, SpecialCharacters
 import rx
 from rx import operators as ops
 

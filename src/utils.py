@@ -1,3 +1,8 @@
+
+# finger with letters maps fingers to the letters that they should be typing
+# obviously this could change from person to person
+# but the default is the most standard one
+
 finger_with_letters = {
     0:{'q','a','z'}, 
     1:{'w','s','x'}, 
@@ -14,7 +19,7 @@ for k, v in finger_with_letters.items():
     for letter in v:
         letter_to_finger[letter] = k
 
-def distance(l1, l2):
+def finger_distance(l1, l2):
     try:
         return abs(letter_to_finger[l1] - letter_to_finger[l2])
     except:

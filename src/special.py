@@ -1,3 +1,5 @@
+from enum import Enum
+
 class SpecialCharacters(Enum):
     BACKSPACE = 1
     CTRL = 2
