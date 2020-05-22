@@ -3,10 +3,10 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
-from src.stream import *
-from src.utils import *
-from src.parse import *
-from src.special import *
+from stream import *
+from utils import *
+from parse import *
+from special import *
 # from src.read import *
 
 def test_type_fix_2():
