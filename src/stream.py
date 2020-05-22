@@ -1,6 +1,8 @@
 from src.special import enumize, SpecialCharacters
 import rx
 from rx import operators as ops
+from sh import tail
+import subprocess
 
 def ensure_length(string, length, source):
     remaining = length - len(string)
@@ -113,7 +115,8 @@ def streamify(source):
         # print("l",i)
         last_returned = string[i]
         yield string[i]
-         
+
+
 class Source:
     def __init__(self, strings, join_with="<Split>"):
         self.string = join_with.join(strings)
@@ -125,6 +128,27 @@ class Source:
     def streamify(self):
         return streamify(self)
 
+class FileSource(Source):
+    def __init__(self, filename, join_with="<Split>", index=0):
+        self.tail =  tail("-F", "/var/log/logkeys.log", _iter=True, _out_bufsize=0)
+        self.index = index
+    def get(self,count):
+        string = ''
+        while count > 0:
+            count -=1
+            char = self.tail.next()
+            if char is '\n':
+                # skip until > is detected
+                while char is not '>':
+                    # capture the timestamp here
+                    char = self.tail.next()
+                char = self.tail.next()
+            string+= char
+        self.index += count
+        return string
+
+    def streamify(self):
+        return streamify(self)    
 
 # TODO reset buffer lengths?
 def return_corrected_pairs(stream):
