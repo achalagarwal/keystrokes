@@ -20,10 +20,10 @@ logging.info('Started')
 
 def click_callback(arg1):
     logging.info("click callback called")
-    print("lol",arg1)
 
 def finger_callback(finger, obj, uid):
-    print(finger, obj, uid)
+    logging.info("finger callback called with finger:%s and uid:%s", str(finger), str(uid))
+    # print(finger, obj, uid)
 
 class DesktopNotification(dbus.service.Object):
     def __init__(self, busname,):
@@ -96,16 +96,19 @@ try:
                                     do_not_queue=True)
     DesktopNotification(bus_name)
 except dbus.exceptions.NameExistsException:
-    print("service is already running")
+    # print("service is already running")
+    logging.info("service is already running")
     sys.exit(1)
 
 # Run the loop
 try:
     loop.run()
 except KeyboardInterrupt:
-    print("keyboard interrupt received")
+    # print("keyboard interrupt received")
+    logging.info("keyboard interrupt received")
 except Exception as e:
-    print("Unexpected exception occurred: '{}'".format(str(e)))
+    # print("Unexpected exception occurred: '{}'".format(str(e)))
+    logging.info("Unexpected exception occurred: %s", str(e))
 finally:
     loop.quit()
 
