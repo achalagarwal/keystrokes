@@ -4,7 +4,12 @@ _fs = FileSource("/var/log/logkeys.log")
 fs = FileSource("/var/log/logkeys.log")
 import time
 from functools import reduce
-import subprocess,os
+import subprocess,os,pwd
+
+def run_as_user(user="achal"):
+    uid, gid = pwd.getpwnam(user).pw_uid, pwd.getpwnam(user).pw_gid
+    os.setgid(gid)
+    os.setuid(uid)
 my_env = os.environ
 
 # cs = return_corrected_pairs(_fs.streamify())
@@ -60,14 +65,14 @@ while True:
         third = sorted_corrections[2] if len(sorted_corrections)>2 else None
         
         heading = "{error:.2f}% error!".format(error = percentage_error)
-        description = "The top 3 worst types are: \n{first}\n{second}\n{third}".format(
-            first = first[0][0] + " --> " + first[0][1],
-            second = second[0][0] + " --> " + second[0][1] if second else None,
-            third = third[0][0] + " --> " + third[0][1] if third else None)
+        description = "The top worst types are: \n{first}{second}{third}".format(
+            first = first[0][0] + " --> " + first[0][1] +'\n',
+            second = second[0][0] + " --> " + second[0][1] + '\n' if second else '',
+            third = third[0][0] + " --> " + third[0][1] if third else '')
 
         # show statistics
 
-        proc = subprocess.check_output(["dbus-send", "--dest=com.keystrokes.notifs", "--print-reply", "--type=method_call", "/com/keystrokes/notif/show","com.keystrokes.notif.show","string:"+heading, "string:"+description, "string:na"])
+        proc = subprocess.Popen(["dbus-send", "--dest=com.keystrokes.notifs", "--print-reply", "--type=method_call", "/com/keystrokes/notif/show","com.keystrokes.notif.show","string:"+heading, "string:"+description, "string:na"])
         # ,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         # print("The exit code was: %d" % list_files.returncode)
         # stdout, stderr = proc.communicate()
@@ -81,6 +86,5 @@ while True:
         
 
     
-
 
     # print(next(cs))
