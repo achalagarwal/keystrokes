@@ -1,18 +1,8 @@
-from stream import FileSource
-from stream import return_corrected_pairs_with_counter
-_fs = FileSource("/var/log/logkeys.log")
-fs = FileSource("/var/log/logkeys.log")
-import time
+from stream import FileSource, return_corrected_pairs_with_counter
+import time, subprocess
 from functools import reduce
-import subprocess,os,pwd
 
-def run_as_user(user="achal"):
-    uid, gid = pwd.getpwnam(user).pw_uid, pwd.getpwnam(user).pw_gid
-    os.setgid(gid)
-    os.setuid(uid)
-my_env = os.environ
-
-# cs = return_corrected_pairs(_fs.streamify())
+_fs = FileSource("/var/log/logkeys.log")
 cs_with_counter = return_corrected_pairs_with_counter(_fs.streamify())
 
 # for every k characters typed show me the most incorrectly typed pairs of keys
@@ -35,7 +25,6 @@ while True:
     if correction[0] is not correction[1]:
         corrections[correction] = corrections.get(correction, 0) + 1
 
-    # print("debug-->", correction, counter)
     if counter - prev_count > k:
 
         # check if time gap is too long
@@ -73,18 +62,10 @@ while True:
         # show statistics
 
         proc = subprocess.Popen(["dbus-send", "--dest=com.keystrokes.notifs", "--print-reply", "--type=method_call", "/com/keystrokes/notif/show","com.keystrokes.notif.show","string:"+heading, "string:"+description, "string:na"])
-        # ,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        # print("The exit code was: %d" % list_files.returncode)
-        # stdout, stderr = proc.communicate()
-        # print(stdout)
-        # print(stderr)
-        print(proc)
+     
         # reset
         prev_count = counter
         prev_time = time.time()
         corrections = dict()
         
 
-    
-
-    # print(next(cs))
