@@ -5,7 +5,9 @@ from dbus.mainloop.glib import DBusGMainLoop
 from gi.repository.GObject import MainLoop
 
 import notify2
-
+import logging
+logging.basicConfig(filename='dbus_keystroke_notifs.log', level=logging.INFO)
+logging.info('Started')
 # class RandomData(dbus.service.Object):
 #     def __init__(self, bus_name):
 #         super().__init__(bus_name, "/com/larry_price/test/RandomData")
@@ -16,6 +18,13 @@ import notify2
 #     def quick(self, bits=8):
 #         return str(random.getrandbits(bits))
 
+def click_callback(arg1):
+    logging.info("click callback called")
+    print("lol",arg1)
+
+def finger_callback(finger, obj, uid):
+    print(finger, obj, uid)
+
 class DesktopNotification(dbus.service.Object):
     def __init__(self, busname,):
         super().__init__(bus_name, "/com/keystrokes/notif/show")
@@ -23,20 +32,57 @@ class DesktopNotification(dbus.service.Object):
     # @dbus.service.signal("com.larry_price.test.RandomData", signature='ss')
     # def showDesktopNotification(self, thread_id, result):
     #     pass
-    
-    @dbus.service.method("com.keystrokes.notif.show", )
+
     # @dbus.service.method("com.keystrokes.notif.show", in_signature='i', out_signature='s')
-    def showDesktopNotification(self, head, desc):
+
+    @dbus.service.method("com.keystrokes.notif",in_signature='sss', out_signature='i')
+    def finger(self, head, desc, uid):
         # open("./ab","wb")
         
 
         try:
-            n = notify2.Notification("Heading","Body with all the details")
+            n = notify2.Notification(head,desc)
+            n.add_action("0", "0",finger_callback,uid)
+            n.add_action("1", "1",finger_callback,uid)
+            n.add_action("2", "2",finger_callback,uid)
+            n.add_action("3", "3",finger_callback,uid)
+            n.add_action("4", "4",finger_callback,uid)
+            n.add_action("5", "5",finger_callback,uid)
+            n.add_action("6", "6",finger_callback,uid)
+            n.add_action("7", "7",finger_callback,uid)
+            n.connect("closed",click_callback)
             n.show()
-            return True
+            return 0
         except:
-            return False
+            return 1
 
+    @dbus.service.method("com.keystrokes.notif",in_signature='sss', out_signature='i')
+    def show(self, head, desc, uid):
+        # open("./ab","wb")
+        
+
+        try:
+            n = notify2.Notification(head,desc)
+            n.connect("closed",click_callback)
+            n.show()
+            return 0
+        except:
+            return 1
+    
+    @dbus.service.method("com.keystrokes.notif",in_signature='sss', out_signature='i')
+    def boolean(self, head, desc, uid):
+        # open("./ab","wb")
+        
+
+        try:
+            n = notify2.Notification(head,desc)
+            n.add_action("yes", "Yes",boolean_callback,uid)
+            n.add_action("no", "No",boolean_callback,uid)
+            n.connect("closed",click_callback)
+            n.show()
+            return 0
+        except:
+            return 1
 # Initialize a main loop
 dbusLoop = DBusGMainLoop(set_as_default=True)
 notify2.init("keystrokes",dbusLoop)

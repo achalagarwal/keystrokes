@@ -233,6 +233,10 @@ def return_corrected_pairs(stream):
         continue
 
            
+# TODO: Create a word context aware character stream
+# Easy to do: send a tuple (char, word_context)
+# word context breaks/changes when there are spaces? but what about a backspace? 
+# a little complicated given that we might have to chain things
 
 def stream_consumer(stream):
     while(1):
