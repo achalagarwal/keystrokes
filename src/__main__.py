@@ -10,7 +10,7 @@ cs_with_counter = return_corrected_pairs_with_counter(_fs.streamify())
 
 # show statistics after k keystrokes
 # but not if a long time has passed between those k keystrokes
-k = 20
+k = 200
 gap_in_seconds = 900
 
 prev_count = 0
@@ -60,7 +60,6 @@ while True:
             third = third[0][0] + " --> " + third[0][1] if third else '')
 
         # show statistics
-
         proc = subprocess.Popen(["dbus-send", "--dest=com.keystrokes.notifs", "--print-reply", "--type=method_call", "/com/keystrokes/notif/show","com.keystrokes.notif.show","string:"+heading, "string:"+description, "string:na"])
      
         # reset
