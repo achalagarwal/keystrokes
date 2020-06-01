@@ -130,7 +130,7 @@ class Source:
 
 class FileSource(Source):
     def __init__(self, filename, join_with="<Split>", index=0):
-        self.tail =  tail("-F", "/var/log/logkeys.log", _iter=True, _out_bufsize=0)
+        self.tail =  tail("-F", filename, _iter=True, _out_bufsize=0)
         self.index = index
     def get(self,count):
         string = ''
@@ -233,6 +233,94 @@ def return_corrected_pairs(stream):
         continue
 
            
+# return corrected pairs
+# but counts all non special keystrokes
+def return_corrected_pairs_with_counter(stream):
+    index = -1
+    previously = None
+    counter = 0
+    # flag set when we are allowed to compare and send letters
+    is_checking = 0
+    reset = True
+    # this stores the detected corrections
+    # they are potential because we might correct a correction thus nullifying the previous correction
+
+    # this could also be (better) thought of as an N-back recorder
+    potential_corrections = []
+    # this is the safety buffer after which we can assume that there will be no more corrections on corrections
+    # this safety buffer will apply on is_checking, so safety_buffer letters after is_checking becomes false
+    safety_buffer = 10
+    # need to initialise with at least one character to prevent errors by one
+    while(1):
+        
+        if len(potential_corrections) >= safety_buffer:
+            # the potential corrections store tuple if its a correction or the character if its just a letter history
+            if type(potential_corrections[0]) == type(('dummy','tuple')):
+                yield (potential_corrections[0], counter)
+            del(potential_corrections[0])
+            continue
+
+        if index == -1 or reset:
+
+            index = 1
+            previously = [None]
+            is_checking = 0
+            reset = False
+            # potential_corrections = []
+            while(1):
+                current_element = next(stream)
+                
+                previously[0] = current_element
+                if type(current_element) is not SpecialCharacters:
+                    counter += 1
+                    break
+            # print("reset with starting element: ", previously[0])
+            continue    
+       
+
+        # the index holds the position with the previous entry + 1
+
+        current_element = next(stream)
+        if type(current_element) is not SpecialCharacters:
+            counter += 1
+        # print("the current element is: ", current_element)
+
+        if current_element == SpecialCharacters.BACKSPACE:
+            is_checking += 1
+            index -= 1
+            # print("backspace found, index reduced to: ", index)
+            if(len(potential_corrections)>0):
+                del(potential_corrections[-1])
+            continue
+        
+        if type(current_element) is SpecialCharacters:
+            # print("resetting.. ")
+            reset = True
+            continue
+        
+        # else: is character
+        if is_checking:
+            # print("yielding a corrected pair: ")
+
+            # the current element may be later deleted in lieu of an unforeseen backspace
+            # we need to wait for validation and this is slightly tricky
+
+            # adding to potential_corrections instead
+            potential_corrections.append((previously[index], current_element))
+            previously[index] = current_element
+            index += 1
+            is_checking -= 1
+            # print("replacing value at: ", index-1)
+            continue
+        
+        # if not checking
+        previously.append(current_element)
+        if(len(potential_corrections)>0):
+            potential_corrections.append(current_element)
+        index += 1
+        # print("appending value at: ", index-1)
+        continue
+
 # TODO: Create a word context aware character stream
 # Easy to do: send a tuple (char, word_context)
 # word context breaks/changes when there are spaces? but what about a backspace? 
