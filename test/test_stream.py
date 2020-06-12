@@ -1,6 +1,7 @@
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src/streams')))
 
 
 from stream import *
@@ -9,7 +10,7 @@ from parse import *
 from special import *
 # from src.read import *
 
-def test_type_fix_2():
+def test_typo_fix_2():
     # this test helped fix the bug of reporting a correction when that correction was later deleted as there was a typo in the correction
     test_typo_fix_stream = return_corrected_pairs(
                             Source(
@@ -71,3 +72,31 @@ def test_typo_fix_1():
         print("Test Successful")
     except AssertionError:
         print("Test Failed")
+
+
+def test_word_context_1():
+
+    word_stream = word_context_stream(Source(
+                                    ['the quick brown fox jumped over the lazy dog. buffer overflow']
+                                ).streamify())
+    
+
+
+    # stream_consumer(word_stream)
+    try:
+        assert next(word_stream)==('the')
+        assert next(word_stream)==('quick')
+        assert next(word_stream)==('brown')
+        assert next(word_stream)==('fox')
+        assert next(word_stream)==('jumped')
+        assert next(word_stream)==('over')
+        assert next(word_stream)==('the')
+        assert next(word_stream)==('lazy')
+        assert next(word_stream)==('dog')
+        print("Test Successful")
+    except IndexError:
+        print("Test Successful")
+    except AssertionError:
+        print("Test Failed")
+
+test_word_context_1()

@@ -1,4 +1,5 @@
 
+from special import SpecialCharacters
 # finger with letters maps fingers to the letters that they should be typing
 # obviously this could change from person to person
 # but the default is the most standard one
@@ -24,3 +25,37 @@ def finger_distance(l1, l2):
         return abs(letter_to_finger[l1] - letter_to_finger[l2])
     except:
         return -1
+
+def is_word_separator(symbol):
+    
+    # switcher for special characters
+    specialChars = {
+        'default': True,
+        SpecialCharacters.SHIFT: False,
+        SpecialCharacters.KEYPAD: False,
+    }
+
+    # switcher for normal chars
+    normalChars = {
+        'default': False,
+        ' ': True,
+        ',': True, 
+        '.': True, 
+        '_': True, 
+        '{': True, 
+        '}': True, 
+        '(': True, 
+        ')': True, 
+        ';': True,
+        '/': True,
+        '\\': True
+    }
+
+    if symbol is SpecialCharacters:
+        return specialChars.get(symbol, specialChars.get('default'))
+
+    # elif symbol is None:
+    #     return False
+
+    else:
+        return normalChars.get(symbol, normalChars.get('default'))

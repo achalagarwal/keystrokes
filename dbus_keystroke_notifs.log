@@ -15,3 +15,234 @@ INFO:root:Started
 INFO:root:click callback called
 INFO:root:click callback called
 INFO:root:click callback called
+INFO:root:Started
+INFO:root:Started
+INFO:root:Started
+INFO:root:Started
+INFO:root:Started
+INFO:root:click callback called
+INFO:root:click callback called
+ERROR:dbus.connection:Exception in handler for D-Bus signal:
+Traceback (most recent call last):
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/dbus/connection.py", line 232, in maybe_handle_message
+    self._handler(*args, **kwargs)
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/notify2.py", line 173, in _closed_callback
+    n._closed_callback(n)
+  File "src/notifs.py", line 23, in click_callback
+    print("lol",arg1)
+OSError: [Errno 5] Input/output error
+INFO:root:Started
+INFO:root:click callback called
+ERROR:dbus.connection:Exception in handler for D-Bus signal:
+Traceback (most recent call last):
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/dbus/connection.py", line 232, in maybe_handle_message
+    self._handler(*args, **kwargs)
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/notify2.py", line 173, in _closed_callback
+    n._closed_callback(n)
+  File "src/notifs.py", line 23, in click_callback
+    print("lol",arg1)
+OSError: [Errno 5] Input/output error
+INFO:root:click callback called
+ERROR:dbus.connection:Exception in handler for D-Bus signal:
+Traceback (most recent call last):
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/dbus/connection.py", line 232, in maybe_handle_message
+    self._handler(*args, **kwargs)
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/notify2.py", line 173, in _closed_callback
+    n._closed_callback(n)
+  File "src/notifs.py", line 23, in click_callback
+    print("lol",arg1)
+OSError: [Errno 5] Input/output error
+INFO:root:click callback called
+ERROR:dbus.connection:Exception in handler for D-Bus signal:
+Traceback (most recent call last):
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/dbus/connection.py", line 232, in maybe_handle_message
+    self._handler(*args, **kwargs)
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/notify2.py", line 173, in _closed_callback
+    n._closed_callback(n)
+  File "src/notifs.py", line 23, in click_callback
+    print("lol",arg1)
+OSError: [Errno 5] Input/output error
+INFO:root:click callback called
+ERROR:dbus.connection:Exception in handler for D-Bus signal:
+Traceback (most recent call last):
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/dbus/connection.py", line 232, in maybe_handle_message
+    self._handler(*args, **kwargs)
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/notify2.py", line 173, in _closed_callback
+    n._closed_callback(n)
+  File "src/notifs.py", line 23, in click_callback
+    print("lol",arg1)
+OSError: [Errno 5] Input/output error
+INFO:root:click callback called
+ERROR:dbus.connection:Exception in handler for D-Bus signal:
+Traceback (most recent call last):
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/dbus/connection.py", line 232, in maybe_handle_message
+    self._handler(*args, **kwargs)
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/notify2.py", line 173, in _closed_callback
+    n._closed_callback(n)
+  File "src/notifs.py", line 23, in click_callback
+    print("lol",arg1)
+OSError: [Errno 5] Input/output error
+INFO:root:click callback called
+ERROR:dbus.connection:Exception in handler for D-Bus signal:
+Traceback (most recent call last):
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/dbus/connection.py", line 232, in maybe_handle_message
+    self._handler(*args, **kwargs)
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/notify2.py", line 173, in _closed_callback
+    n._closed_callback(n)
+  File "src/notifs.py", line 23, in click_callback
+    print("lol",arg1)
+OSError: [Errno 5] Input/output error
+INFO:root:click callback called
+ERROR:dbus.connection:Exception in handler for D-Bus signal:
+Traceback (most recent call last):
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/dbus/connection.py", line 232, in maybe_handle_message
+    self._handler(*args, **kwargs)
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/notify2.py", line 173, in _closed_callback
+    n._closed_callback(n)
+  File "src/notifs.py", line 23, in click_callback
+OSError: [Errno 5] Input/output error
+INFO:root:click callback called
+ERROR:dbus.connection:Exception in handler for D-Bus signal:
+Traceback (most recent call last):
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/dbus/connection.py", line 232, in maybe_handle_message
+    self._handler(*args, **kwargs)
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/notify2.py", line 173, in _closed_callback
+    n._closed_callback(n)
+  File "src/notifs.py", line 23, in click_callback
+OSError: [Errno 5] Input/output error
+INFO:root:click callback called
+ERROR:dbus.connection:Exception in handler for D-Bus signal:
+Traceback (most recent call last):
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/dbus/connection.py", line 232, in maybe_handle_message
+    self._handler(*args, **kwargs)
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/notify2.py", line 173, in _closed_callback
+    n._closed_callback(n)
+  File "src/notifs.py", line 23, in click_callback
+OSError: [Errno 5] Input/output error
+INFO:root:click callback called
+ERROR:dbus.connection:Exception in handler for D-Bus signal:
+Traceback (most recent call last):
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/dbus/connection.py", line 232, in maybe_handle_message
+    self._handler(*args, **kwargs)
+  File "/home/achal/.python_environments/keyboard/lib/python3.6/site-packages/notify2.py", line 173, in _closed_callback
+    n._closed_callback(n)
+  File "src/notifs.py", line 23, in click_callback
+OSError: [Errno 5] Input/output error
+INFO:root:Started
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:Started
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:Started
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:finger callback called with finger:<notify2.Notification object at 0x7fe624a0c400> and uid:12391
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called
+INFO:root:click callback called

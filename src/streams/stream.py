@@ -1,4 +1,5 @@
 from special import enumize, SpecialCharacters
+from utils import is_word_separator
 import rx
 from rx import operators as ops
 from sh import tail
@@ -236,7 +237,7 @@ def return_corrected_pairs(stream):
            
 # return corrected pairs
 # but counts all non special keystrokes
-def return_corrected_pairs_with_counter_with_context(stream):
+def return_corrected_pairs_with_counter(stream):
     index = -1
     previously = None
     counter = 0
@@ -327,19 +328,39 @@ def return_corrected_pairs_with_counter_with_context(stream):
         # print("appending value at: ", index-1)
         continue
 
-# TODO: Create a word context aware character stream
-# Easy to do: send a tuple (char, word_context)
-# word context breaks/changes when there are spaces? but what about a backspace? 
-# a little complicated given that we might have to chain things
 
-# TODO: There are two ways to do this
-# we can have a word stream, a correction stream and connect them both
-# this one is tough but the implementation will be so much cleaner
+def word_context_stream(stream, safety_buffer=10):
+    index = 0 
+    buffer = [None for _ in range(2*safety_buffer)]
+    current_word = ''
 
-# return corrected pairs
-# but counts all non special keystrokes
-def return_corrected_pairs_with_word_context(stream):
-    
+    while(1): 
+
+        # check buffer and generate word contexts
+        if index == 2*safety_buffer:
+            
+            _index = 0
+            while(_index < safety_buffer):
+                
+                symbol = buffer[_index]
+                buffer[_index] = buffer[_index + safety_buffer]
+                _index += 1
+
+                if is_word_separator(symbol):
+                    yield current_word
+                    current_word = ''
+                
+                else:
+                    if symbol is not SpecialCharacters:
+                        current_word += symbol
+            index = safety_buffer
+            continue
+        
+        symbol = next(stream)
+        buffer[index] = symbol
+        index += 1
+        continue
+
 
 def stream_consumer(stream):
     while(1):
