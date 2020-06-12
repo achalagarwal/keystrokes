@@ -193,7 +193,8 @@ def return_corrected_pairs(stream):
 
         # the index holds the position with the previous entry + 1
 
-        current_element = next(stream)
+        else:
+            current_element = next(stream)
         # print("the current element is: ", current_element)
 
         if current_element == SpecialCharacters.BACKSPACE:
@@ -235,7 +236,7 @@ def return_corrected_pairs(stream):
            
 # return corrected pairs
 # but counts all non special keystrokes
-def return_corrected_pairs_with_counter(stream):
+def return_corrected_pairs_with_counter_with_context(stream):
     index = -1
     previously = None
     counter = 0
@@ -259,7 +260,12 @@ def return_corrected_pairs_with_counter(stream):
                 yield (potential_corrections[0], counter)
             del(potential_corrections[0])
             continue
+        
+        # TODO
+        # the reset is quite questionable and should be relaxed
 
+        # TODO
+        # Now there are multiple copies of the same code and that's annoying, fixit!
         if index == -1 or reset:
 
             index = 1
@@ -272,7 +278,6 @@ def return_corrected_pairs_with_counter(stream):
                 
                 previously[0] = current_element
                 if type(current_element) is not SpecialCharacters:
-                    counter += 1
                     break
             # print("reset with starting element: ", previously[0])
             continue    
@@ -281,6 +286,7 @@ def return_corrected_pairs_with_counter(stream):
         # the index holds the position with the previous entry + 1
 
         current_element = next(stream)
+
         if type(current_element) is not SpecialCharacters:
             counter += 1
         # print("the current element is: ", current_element)
@@ -326,6 +332,28 @@ def return_corrected_pairs_with_counter(stream):
 # word context breaks/changes when there are spaces? but what about a backspace? 
 # a little complicated given that we might have to chain things
 
+# TODO: There are two ways to do this
+# we can have a word stream, a correction stream and connect them both
+# this one is tough but the implementation will be so much cleaner
+
+# return corrected pairs
+# but counts all non special keystrokes
+def return_corrected_pairs_with_word_context(stream):
+    
+
 def stream_consumer(stream):
     while(1):
         print(next(stream))
+
+
+## 
+
+## pseudo code for detecting a set of words
+'''
+def ...
+
+fetch strings from source (stream) --> stream of words
+if word in set
+    yield word
+
+'''
