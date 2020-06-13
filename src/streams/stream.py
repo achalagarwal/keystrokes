@@ -12,7 +12,8 @@ def ensure_length(string, length, source):
     else:
         return string
 
-def streamify(source):
+def streamify(source, counter=False):
+    _counter = 0
     string = source.get(10)
     processed = 0
     i = -1
@@ -22,7 +23,8 @@ def streamify(source):
         # symbols detected previously are stored in symbol
         if symbol:
             last_returned = symbol
-            yield symbol
+            _counter += 1
+            yield (symbol,_counter) if counter else symbol
             symbol = None
             continue
         
@@ -57,7 +59,8 @@ def streamify(source):
                         # now we repeat the previously returned string that many times
                         while repeat_times > 0:
                             repeat_times -= 1
-                            yield last_returned
+                            _counter += 1
+                            yield (last_returned, _counter) if counter else last_returned
 
                         end = start+3+end_bracket_at
                         i = end
@@ -109,13 +112,15 @@ def streamify(source):
             # otherwise the current char will be returned
             last_returned = string[i]
             # print("b",end, start, i)
-            yield string[i]
+            _counter += 1
+            yield (string[i], _counter) if counter else string[i]
             # after every yield we need to restart
             continue
         # if not <
         # print("l",i)
         last_returned = string[i]
-        yield string[i]
+        _counter += 1
+        yield (string[i], _counter) if counter else string[i]
 
 
 class Source:
@@ -148,8 +153,8 @@ class FileSource(Source):
         self.index += count
         return string
 
-    def streamify(self):
-        return streamify(self)    
+    def streamify(self, counter=False):
+        return streamify(self, counter)    
 
 # TODO reset buffer lengths?
 def return_corrected_pairs(stream):
