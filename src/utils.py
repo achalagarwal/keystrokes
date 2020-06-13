@@ -33,6 +33,7 @@ def is_word_separator(symbol):
         'default': True,
         SpecialCharacters.SHIFT: False,
         SpecialCharacters.KEYPAD: False,
+        SpecialCharacters.BACKSPACE: False,
     }
 
     # switcher for normal chars
