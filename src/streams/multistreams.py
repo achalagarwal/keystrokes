@@ -193,7 +193,7 @@ def return_corrected_pairs_with_word_context(filename):
     stream_syncer = word_context_stream(FileSourceExisting(filename).streamify(counter=True))
     # current_word, sync_value = next(stream_syncer)
 
-    stream_syncee = return_corrected_pairs_with_counter(FileSourceExisting(filename).streamify(counter=True))
+    stream_syncee = return_corrected_pairs(FileSourceExisting(filename).streamify(counter=True))
     
     # initialise syncee
     stream_syncee.send(None)
@@ -222,5 +222,5 @@ def return_corrected_pairs_with_word_context(filename):
 import pdb
 if __name__ == '__main__':
     # pdb.run('return_corrected_pairs_with_word_context("/var/log/logkeys.logsss")')
-    # return_corrected_pairs_with_word_context("../data/manual.log")
-    return_corrected_pairs_with_word_context("../data/keylogs.log")
+    return_corrected_pairs_with_word_context("../data/manual.log")
+    # return_corrected_pairs_with_word_context("../data/keylogs.log")
