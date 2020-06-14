@@ -1,14 +1,14 @@
 import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from stream import FileSource
+from stream import FileSourceExisting
 from special import SpecialCharacters
 from utils import is_word_separator
 # return corrected pairs
 # but counts all non special keystrokes
 
 # so before yielding check the sync value,
-# after yielding, recieve the next sync value
+# after yielding, receive the next sync value
 # but if the sync value is more, yield None 
 
 def return_corrected_pairs_with_counter(stream, syncee=True, syncer=False):
@@ -35,11 +35,11 @@ def return_corrected_pairs_with_counter(stream, syncee=True, syncer=False):
             # the potential corrections store tuple if its a correction or the character if its just a letter history
             if type(potential_corrections[0][1]) == type(('dummy','tuple')):
                 if potential_corrections[0][1][1] <= sync_on:
-                    yield (potential_corrections[0], counter)
+                    sync_on = yield (potential_corrections[0], counter)
                     del(potential_corrections[0])
                 else:
-                    yield None
-                sync_on = yield
+                    sync_on = yield None
+                # sync_on = yield
             else:
                 # delete the non error
                 del(potential_corrections[0])
@@ -146,6 +146,27 @@ def word_context_stream(stream, safety_buffer=10, sync_clock=True):
             continue
         
         symbol_w_counter = next(stream)
+
+        # backspaces need to be handled separately
+        # they have to be handled here before the characters are stored in the buffer
+        # this way the capture above can be direct
+        # TODO
+        # so this portion of the code could be another stream
+        # and this stream can be then always used for the subsequent connection streams
+
+        # if backspace
+        # update syncclock
+        # and negative update the index
+        
+        if symbol_w_counter[0] == SpecialCharacters.BACKSPACE:
+            if index > 0:
+                index -=1 
+                buffer[index]
+                if index > 0:
+                    buffer[index-1] = (buffer[index-1][0],symbol_w_counter[1])
+                # how can we update the sync_value on a backspace
+                # do I need to keep track of backspace sync?
+            continue
         buffer[index] = symbol_w_counter
         index += 1
         continue
@@ -167,10 +188,12 @@ def return_corrected_pairs_with_word_context(filename):
 
     # the common stream should have a counter 
     # so that it could be synchronised
-    stream_syncer = word_context_stream(FileSource(filename).streamify(counter=True))
+
+    pdb.set_trace()
+    stream_syncer = word_context_stream(FileSourceExisting(filename).streamify(counter=True))
     # current_word, sync_value = next(stream_syncer)
 
-    stream_syncee = return_corrected_pairs_with_counter(FileSource(filename).streamify(counter=True))
+    stream_syncee = return_corrected_pairs_with_counter(FileSourceExisting(filename).streamify(counter=True))
     
     # initialise syncee
     stream_syncee.send(None)
@@ -187,7 +210,7 @@ def return_corrected_pairs_with_word_context(filename):
         errors = []
         while recv is not None:
             errors.append(recv)
-            recv = next(stream_syncee)
+            recv = stream_syncee.send(sync_value)
         if len(errors)>0:
             print(current_word)
             print(errors)
@@ -198,5 +221,6 @@ def return_corrected_pairs_with_word_context(filename):
     
 import pdb
 if __name__ == '__main__':
-    pdb.run('return_corrected_pairs_with_word_context("/var/log/logkeys.log")')
-    return_corrected_pairs_with_word_context("/var/log/logkeys.log")
+    # pdb.run('return_corrected_pairs_with_word_context("/var/log/logkeys.logsss")')
+    # return_corrected_pairs_with_word_context("../data/manual.log")
+    return_corrected_pairs_with_word_context("../data/keylogs.log")
