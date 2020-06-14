@@ -134,6 +134,31 @@ class Source:
     def streamify(self):
         return streamify(self)
 
+
+# Create a class factory which switches between class implementations based on the context
+
+class FileSourceExisting(Source):
+
+    def __init__(self, filename, join_with="<Split>", index=0):
+        
+        self.file = open(filename)
+        self.current_string = ''
+
+    def get(self, count):
+        
+        while len(current_string) < count:
+            new_line = f.readline()
+            if not new_line:
+                raise(EOF_Exception)
+            current_string += f.readline()
+        
+        extract_count = current_string[0:count]
+        current_string = current_string[count:]
+        return extract_string
+
+    def streamify(self, counter=False):
+        return streamify(self, counter)
+
 class FileSource(Source):
     def __init__(self, filename, join_with="<Split>", index=0):
         self.tail =  tail("-F", filename, _iter=True, _out_bufsize=0)
