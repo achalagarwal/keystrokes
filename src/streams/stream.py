@@ -146,14 +146,14 @@ class FileSourceExisting(Source):
 
     def get(self, count):
         
-        while len(current_string) < count:
-            new_line = f.readline()
+        while len(self.current_string) < count:
+            new_line = self.file.readline()
             if not new_line:
                 raise(EOF_Exception)
-            current_string += f.readline()
+            self.current_string += new_line
         
-        extract_count = current_string[0:count]
-        current_string = current_string[count:]
+        extract_string = self.current_string[0:count]
+        self.current_string = self.current_string[count:]
         return extract_string
 
     def streamify(self, counter=False):
