@@ -4,3 +4,5 @@ nohup.out
 *log
 src/__pycache__/*
 __pycache__/
+src/streams/__pycache__/
+.vscode/
