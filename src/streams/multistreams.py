@@ -509,7 +509,7 @@ def return_corrected_pairs_with_word_context(filename):
                         error_flags += 1
                     
                     if error_flags == 0:
-                        if finger_distance(error[0], error[1]) > 3:
+                        if finger_distance(error[0], error[1]) > 1:
                             d_ref[UNKNOWN][error] = d_ref[UNKNOWN].get(error, 0) + 1
                         else:
                             d_ref[WRONG][error] = d_ref[WRONG].get(error, 0) + 1
@@ -529,6 +529,7 @@ def return_corrected_pairs_with_word_context(filename):
         extras = {}
         unknowns = {}
         wrongs = {}
+        unknown_extra = {}
 
         for k, v in words_containing_errors.items():
 
@@ -548,7 +549,11 @@ def return_corrected_pairs_with_word_context(filename):
                     wrongs[k] = wrongs.get(k, 0) + s
                 
                 elif e_t == UNKNOWN:
+                    # k is the current_word
                     unknowns[k] = unknowns.get(k, 0) + s
+                    unknown_extra[k] = unknown_extra.get(k, {})
+                    for x, y in error_count_map.items():
+                        unknown_extra[k][x] = unknown_extra[k].get(x, 0)+y
                 
                 elif e_t == MISSED:
                     misses[k] = misses.get(k, 0) + s
