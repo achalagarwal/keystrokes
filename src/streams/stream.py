@@ -13,12 +13,14 @@ def ensure_length(string, length, source):
         return string
 
 def streamify(source, counter=False):
+
     _counter = 0
     string = source.get(10)
     processed = 0
     i = -1
     symbol = None
     last_returned = None
+
     while(1):
         # symbols detected previously are stored in symbol
         if symbol:
@@ -32,7 +34,9 @@ def streamify(source, counter=False):
         
         try:
             char = string[i]
+
         except:
+
             processed += len(string)
             i = 0
             string = source.get(10)
