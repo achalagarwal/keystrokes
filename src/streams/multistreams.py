@@ -564,7 +564,8 @@ def return_corrected_pairs_with_word_context(filename):
         sorted_misses = sorted(list(misses.items()), key=lambda x: x[1], reverse=True)
         sorted_wrongs = sorted(list(wrongs.items()), key=lambda x: x[1], reverse=True)
         sorted_unknowns = sorted(list(unknowns.items()), key=lambda x: x[1], reverse=True)
-
+        #
+        unknown_detect = sorted(list(unknown_extra.items()), reverse=True,key=lambda x: sum(list(x[1].values())))
         print(sorted_swaps)
         print(sorted_extras)
         print(sorted_misses)
